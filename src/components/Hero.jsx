@@ -6,6 +6,7 @@ import { fetchContent, imageUrl } from '../lib/api';
 // Fallback content shown if the CMS backend isn't running
 const DEFAULT_HERO = {
   name: "Sarjun J",
+  subtitle: "AI.ENGINE",
   role_badge: "AI ENGINEER",
   tagline: "Code. Create. Innovate. Repeat.",
   tech_line: "Python • AI/ML • Data Analytics • Git & Docker",
@@ -213,7 +214,7 @@ const Hero = ({ onNavigate }) => {
             <h1 className="hero-anim-item text-5xl md:text-7xl font-black tracking-tighter text-white leading-[0.95] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]">
               {hero.name} <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-sky-500 to-blue-700 drop-shadow-[0_0_35px_rgba(37,99,235,0.5)]">
-                AI.ENGINE
+                {hero.subtitle}
               </span>
             </h1>
 
