@@ -1,48 +1,79 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { fetchContent } from '../lib/api';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const expertiseData = [
+// Fallback content shown if the CMS backend isn't running or has no data yet
+const DEFAULT_EXPERTISE = [
   {
-    number: "01",
     title: "Frontend Development",
     text: "Crafting responsive, high-fidelity user interfaces with React, modern JavaScript, Tailwind CSS, and buttery smooth GSAP motion interactions.",
     tag: "UI / UX & INTERACTION",
-    gradient: "from-[#1f0a0c] via-[#121212] to-[#0a0a0a]"
   },
   {
-    number: "02",
     title: "Backend Development",
     text: "Architecting secure REST APIs, enterprise authentication pipelines, and scalable database schemas across PostgreSQL and MongoDB.",
     tag: "API & ARCHITECTURE",
-    gradient: "from-[#1a0809] via-[#111111] to-[#090909]"
   },
   {
-    number: "03",
     title: "AI & Machine Learning",
     text: "Integrating production-grade LLM workflows, predictive machine learning pipelines, and computer vision systems backed by AWS AI certification.",
     tag: "INTELLIGENCE & ML",
-    gradient: "from-[#220a0d] via-[#131313] to-[#0a0a0a]"
   },
   {
-    number: "04",
     title: "Cloud & Deployment",
     text: "Deploying resilient, containerized multi-tenant services using Docker, GitHub Actions CI/CD workflows, and optimized cloud hosting.",
     tag: "DEVOPS & CLOUD",
-    gradient: "from-[#1d090b] via-[#101010] to-[#080808]"
   }
 ];
+
+// Cycles through a fixed set of card gradients by position, so the admin
+// panel doesn't need to deal with CSS - just title/text/tag/order.
+const GRADIENTS = [
+  "from-[#0a1a2e] via-[#121212] to-[#0a0a0a]",
+  "from-[#081a24] via-[#111111] to-[#090909]",
+  "from-[#0d1f30] via-[#131313] to-[#0a0a0a]",
+  "from-[#091822] via-[#101010] to-[#080808]",
+];
+
+function mapFromBackend(items) {
+  return items.map((item, i) => ({
+    number: String(i + 1).padStart(2, '0'),
+    title: item.title,
+    text: item.text,
+    tag: item.tag,
+    gradient: GRADIENTS[i % GRADIENTS.length],
+  }));
+}
+
+function withDefaults(items) {
+  return items.map((item, i) => ({
+    ...item,
+    number: String(i + 1).padStart(2, '0'),
+    gradient: GRADIENTS[i % GRADIENTS.length],
+  }));
+}
 
 const Expertise = () => {
   const containerRef = useRef(null);
   const cardRefs = useRef([]);
+  const [expertiseData, setExpertiseData] = useState(withDefaults(DEFAULT_EXPERTISE));
+
+  useEffect(() => {
+    fetchContent('/expertise', null).then((data) => {
+      if (data && data.length > 0) {
+        setExpertiseData(mapFromBackend(data));
+      } else {
+        setExpertiseData(withDefaults(DEFAULT_EXPERTISE));
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const cards = cardRefs.current;
     if (!cards.length) return;
-
     cards.forEach((card, index) => {
       if (index === cards.length - 1) return; // Keep the top-most card fully focused
 
@@ -79,7 +110,7 @@ const Expertise = () => {
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
-  }, []);
+  }, [expertiseData]);
 
   const addToRefs = (el) => {
     if (el && !cardRefs.current.includes(el)) {
@@ -91,25 +122,25 @@ const Expertise = () => {
     <section
       id="expertise"
       ref={containerRef}
-      className="relative w-full bg-[#050505] text-white py-20 px-6 md:px-12 select-none overflow-hidden"
+      className="relative w-full bg-[#0a0e1a] text-white py-20 px-6 md:px-12 select-none overflow-hidden"
     >
       {/* Cinematic Red Ambient Glow */}
-      <div className="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-red-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+      <div className="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
 
       <div className="relative z-10 max-w-6xl mx-auto w-full space-y-12">
         
         {/* Compact Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
           <div className="space-y-3 max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-black/80 backdrop-blur-xl border border-red-600/40 text-[11px] font-mono uppercase tracking-widest text-white shadow-xl">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping"></span>
-              <span className="text-red-500 font-bold">EPISODE 02</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#0a0e1a]/80 backdrop-blur-xl border border-blue-600/40 text-[11px] font-mono uppercase tracking-widest text-white shadow-xl">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping"></span>
+              <span className="text-blue-500 font-bold">EXPERTISE</span>
               <span className="text-white/40">|</span>
               <span>CORE COMPETENCIES</span>
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
               DIRECTOR'S CUT <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-600 to-red-700 drop-shadow-[0_0_25px_rgba(229,9,20,0.35)]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-sky-500 to-blue-700 drop-shadow-[0_0_25px_rgba(37,99,235,0.35)]">
                 TECHNICAL CAPABILITIES.
               </span>
             </h2>
@@ -125,7 +156,7 @@ const Expertise = () => {
             <div
               key={index}
               ref={addToRefs}
-              className={`sticky w-full p-6 md:p-8 rounded-2xl bg-gradient-to-br ${item.gradient} backdrop-blur-2xl border border-white/10 shadow-[0_20px_45px_rgba(0,0,0,0.85)] flex flex-col justify-between min-h-[230px] md:min-h-[250px] transform-gpu transition-all overflow-hidden group hover:border-red-600/50`}
+              className={`sticky w-full p-6 md:p-8 rounded-2xl bg-gradient-to-br ${item.gradient} backdrop-blur-2xl border border-white/15 shadow-[0_20px_45px_rgba(0,0,0,0.85)] flex flex-col justify-between min-h-[230px] md:min-h-[250px] transform-gpu transition-all overflow-hidden group hover:border-blue-600/50`}
               style={{
                 zIndex: index + 1,
                 top: `${95 + index * 16}px`
@@ -135,16 +166,16 @@ const Expertise = () => {
               <div 
                 className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
                 style={{
-                  background: 'radial-gradient(350px circle at var(--mouse-x) var(--mouse-y), rgba(229,9,20,0.18), transparent 70%)'
+                  background: 'radial-gradient(350px circle at var(--mouse-x) var(--mouse-y), rgba(37,99,235,0.18), transparent 70%)'
                 }}
               ></div>
 
               {/* Crimson Accent Stripe */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-[2px] bg-gradient-to-r from-transparent via-red-600 to-transparent z-10"></div>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-[2px] bg-gradient-to-r from-transparent via-blue-600 to-transparent z-10"></div>
 
               {/* Card Header Top */}
               <div className="flex items-center justify-between w-full mb-4 relative z-10">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-red-500 px-2.5 py-0.5 rounded bg-red-600/10 border border-red-600/25">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-blue-500 px-2.5 py-0.5 rounded bg-blue-600/10 border border-blue-600/25">
                   {item.tag}
                 </span>
                 <span className="text-2xl md:text-3xl font-mono font-black text-white/20">
@@ -155,7 +186,7 @@ const Expertise = () => {
               {/* Card Body */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center my-auto relative z-10">
                 <div className="lg:col-span-5">
-                  <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-snug group-hover:text-red-500 transition-colors duration-300">
+                  <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-snug group-hover:text-blue-500 transition-colors duration-300">
                     {item.title}
                   </h3>
                 </div>
@@ -167,7 +198,7 @@ const Expertise = () => {
               </div>
 
               {/* Subtle Red Corner Dot */}
-              <div className="absolute bottom-4 right-4 w-1.5 h-1.5 rounded-full bg-red-600 group-hover:shadow-[0_0_10px_#E50914] z-10 transition-all"></div>
+              <div className="absolute bottom-4 right-4 w-1.5 h-1.5 rounded-full bg-blue-600 group-hover:shadow-[0_0_10px_#3B82F6] z-10 transition-all"></div>
             </div>
           ))}
         </div>

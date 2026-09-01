@@ -36,11 +36,11 @@ const MinimalPreloader = ({ onComplete }) => {
   return (
     <div
       ref={preloaderRef}
-      className="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center select-none overflow-hidden"
+      className="fixed inset-0 z-[9999] bg-[#0a0e1a] flex items-center justify-center select-none overflow-hidden"
     >
       <div ref={contentRef} className="flex flex-col items-center gap-4">
         {/* Minimal Red Indicator Dot */}
-        <div className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping"></div>
+        <div className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping"></div>
 
         {/* Minimal Typography */}
         <h1 

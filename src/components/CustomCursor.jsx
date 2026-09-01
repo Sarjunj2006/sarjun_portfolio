@@ -66,20 +66,20 @@ const CustomCursor = () => {
         ref={spotlightRef}
         className="fixed top-0 left-0 w-[700px] h-[700px] rounded-full pointer-events-none z-[9998] opacity-0 blur-[100px] transition-opacity duration-300"
         style={{
-          background: 'radial-gradient(circle, rgba(229,9,20,0.2) 0%, rgba(229,9,20,0.06) 45%, transparent 75%)'
+          background: 'radial-gradient(circle, rgba(37,99,235,0.2) 0%, rgba(37,99,235,0.06) 45%, transparent 75%)'
         }}
       ></div>
 
       {/* Global Custom Cursor Dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 z-[9999] pointer-events-none w-3 h-3 bg-red-600 rounded-full shadow-[0_0_15px_#E50914]"
+        className="fixed top-0 left-0 z-[9999] pointer-events-none w-3 h-3 bg-blue-600 rounded-full shadow-[0_0_15px_#3B82F6]"
       ></div>
 
       {/* Global Custom Cursor Ring */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 z-[9999] pointer-events-none w-12 h-12 border border-red-600/60 rounded-full flex items-center justify-center backdrop-blur-[1px]"
+        className="fixed top-0 left-0 z-[9999] pointer-events-none w-12 h-12 border border-blue-600/60 rounded-full flex items-center justify-center backdrop-blur-[1px]"
       ></div>
     </>
   );

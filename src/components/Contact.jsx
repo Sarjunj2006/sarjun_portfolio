@@ -71,10 +71,10 @@ const Contact = () => {
   };
 
   return (
-    <section ref={ref} id="contact" className="bg-[#0b0b0b] w-full min-h-screen relative overflow-hidden flex items-end pt-32 pb-0 border-t border-white/10 select-none">
+    <section ref={ref} id="contact" className="bg-[#0a0e1a] w-full min-h-screen relative overflow-hidden flex items-end pt-32 pb-0 border-t border-white/15 select-none">
       
       {/* Background Cinematic Red Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
 
       {/* Huge Background Parallax Netflix Watermark Text */}
       <motion.div 
@@ -82,7 +82,7 @@ const Contact = () => {
         className="absolute top-0 left-0 w-full h-full flex flex-col justify-start items-center overflow-hidden pointer-events-none z-0 pt-16 md:pt-12 opacity-10"
       >
         <h1 
-          className="text-[25vw] leading-[0.75] font-black text-red-600 uppercase tracking-tighter select-none scale-y-[1.6] origin-top"
+          className="text-[25vw] leading-[0.75] font-black text-blue-600 uppercase tracking-tighter select-none scale-y-[1.6] origin-top"
           style={{ fontFamily: "'Bebas Neue', 'Impact', sans-serif" }}
         >
           CONTACT
@@ -96,15 +96,15 @@ const Contact = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="bg-[#141414]/95 backdrop-blur-2xl border-t border-l border-white/15 w-full md:w-[90%] lg:w-[82%] p-8 md:p-16 text-white flex flex-col justify-between rounded-tl-[3rem] shadow-[0_-25px_60px_rgba(0,0,0,0.9)] relative overflow-hidden"
+          className="bg-[#131c31]/95 backdrop-blur-2xl border-t border-l border-white/15 w-full md:w-[90%] lg:w-[82%] p-8 md:p-16 text-white flex flex-col justify-between rounded-tl-[3rem] shadow-[0_-25px_60px_rgba(0,0,0,0.9)] relative overflow-hidden"
         >
           {/* Subtle internal top crimson highlight glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-90"></div>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-blue-600 to-transparent opacity-90"></div>
 
           <div className="flex items-center justify-between mb-12 md:mb-16">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded bg-red-600/10 border border-red-600/30 text-xs font-mono uppercase tracking-widest text-red-500">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping"></span>
-              <span>EPISODE 04 // GET IN TOUCH</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded bg-blue-600/10 border border-blue-600/30 text-xs font-mono uppercase tracking-widest text-blue-500">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping"></span>
+              <span>GET IN TOUCH</span>
             </div>
             <span className="text-xs font-mono text-white/40 tracking-wider hidden md:block">
               // LET'S BUILD SOMETHING CINEMATIC
@@ -124,7 +124,7 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="First Name" 
                     required
-                    className="w-full bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-red-600 transition-colors placeholder-white/40 font-medium rounded-none text-white"
+                    className="w-full bg-transparent border-b border-white/15 pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-white/40 font-medium rounded-none text-white"
                   />
                 </div>
                 <div className="relative">
@@ -135,7 +135,7 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="Last Name" 
                     required
-                    className="w-full bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-red-600 transition-colors placeholder-white/40 font-medium rounded-none text-white"
+                    className="w-full bg-transparent border-b border-white/15 pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-white/40 font-medium rounded-none text-white"
                   />
                 </div>
                 <div className="relative">
@@ -146,7 +146,7 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="Email Address" 
                     required
-                    className="w-full bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-red-600 transition-colors placeholder-white/40 font-medium rounded-none text-white"
+                    className="w-full bg-transparent border-b border-white/15 pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-white/40 font-medium rounded-none text-white"
                   />
                 </div>
               </div>
@@ -160,14 +160,14 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="Type your message here..." 
                     required
-                    className="w-full h-full min-h-[140px] bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-red-600 transition-colors placeholder-white/40 font-medium resize-none rounded-none text-white"
+                    className="w-full h-full min-h-[140px] bg-transparent border-b border-white/15 pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-white/40 font-medium resize-none rounded-none text-white"
                   ></textarea>
                 </div>
               </div>
             </div>
 
             {/* Bottom Section */}
-            <div className="flex flex-col md:flex-row gap-12 mt-4 pt-6 border-t border-white/10">
+            <div className="flex flex-col md:flex-row gap-12 mt-4 pt-6 border-t border-white/15">
               {/* Left text */}
               <div className="flex-1 flex items-start gap-4 text-sm font-light text-white/70">
                 <input 
@@ -175,8 +175,8 @@ const Contact = () => {
                   id="permission" 
                   checked={formData.permission}
                   onChange={handleChange}
-                  className="mt-1 w-4 h-4 rounded-sm border-white/30 bg-transparent text-red-600 focus:ring-0 focus:ring-offset-0 cursor-pointer" 
-                  style={{ accentColor: "#E50914" }}
+                  className="mt-1 w-4 h-4 rounded-sm border-white/30 bg-transparent text-blue-600 focus:ring-0 focus:ring-offset-0 cursor-pointer" 
+                  style={{ accentColor: "#3B82F6" }}
                 />
                 <label htmlFor="permission" className="cursor-pointer max-w-[280px] leading-snug">
                   I give permission to contact me at this email address.
@@ -197,7 +197,7 @@ const Contact = () => {
                     <button 
                       type="submit" 
                       disabled={status === 'sending'}
-                      className="px-8 py-3.5 rounded bg-red-600 text-white font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-red-700 transition-all duration-300 group whitespace-nowrap shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+                      className="px-8 py-3.5 rounded bg-blue-600 text-white font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-blue-700 transition-all duration-300 group whitespace-nowrap shadow-[0_0_20px_rgba(37,99,235,0.6)] hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
                       {status === 'sending' ? 'Sending...' : 'Send Message'}
                       <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -208,7 +208,7 @@ const Contact = () => {
                       <p className="text-green-500 text-xs font-mono">Message sent successfully.</p>
                     )}
                     {status === 'error' && (
-                      <p className="text-red-500 text-xs font-mono">Something went wrong. Please try again.</p>
+                      <p className="text-blue-500 text-xs font-mono">Something went wrong. Please try again.</p>
                     )}
                   </div>
                 </div>

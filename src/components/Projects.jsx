@@ -1,18 +1,18 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { fetchContent } from '../lib/api';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Authentic Project Data based on your engineering portfolio
-const projectsData = [
+// Fallback content shown if the CMS backend isn't running or has no data yet
+const DEFAULT_PROJECTS = [
   {
     title: "AI Career Mentor",
     category: "AI & Full-Stack Engineering",
     description: "A full-stack career guidance app using prompt engineering with context injection (resume + profile data) for AI-driven career analysis, skill-gap detection, and interview prep.",
     tags: ["FastAPI", "React", "SQLAlchemy", "Ollama"],
-    match: "99%",
-    episode: "S01 E01",
+    index: "01",
     links: {
       frontend: "https://github.com/Sarjunj2006/ai-career-mentor-frontend",
       backend: "https://github.com/Sarjunj2006/ai-career-mentor"
@@ -23,13 +23,29 @@ const projectsData = [
     category: "Multi-Tenant AI Platform",
     description: "A multi-tenant AI content repurposer: upload a blog post or video transcript and AI turns it into tweets, LinkedIn posts, and email newsletters, with tenant-specific tone settings.",
     tags: ["Python", "FastAPI", "LangChain", "PostgreSQL"],
-    match: "98%",
-    episode: "S01 E02",
+    index: "02",
     links: {
       repo: "https://github.com/Sarjunj2006/repurposer_ai"
     }
   }
 ];
+
+// Converts the backend's shape (tags as a comma-separated string, separate
+// link fields) into the shape this component renders with.
+function mapFromBackend(items) {
+  return items.map((item, i) => ({
+    title: item.title,
+    category: item.category,
+    description: item.description,
+    tags: (item.tags || '').split(',').map((t) => t.trim()).filter(Boolean),
+    index: String(i + 1).padStart(2, '0'),
+    links: {
+      frontend: item.frontend_link || undefined,
+      backend: item.backend_link || undefined,
+      repo: item.repo_link || undefined,
+    },
+  }));
+}
 
 const Projects = () => {
   const containerRef = useRef(null);
@@ -38,6 +54,17 @@ const Projects = () => {
   const cardsRef = useRef([]);
   const mobileCardsRef = useRef([]);
   const mobileCarouselRef = useRef(null);
+  const [projectsData, setProjectsData] = useState(DEFAULT_PROJECTS);
+
+  useEffect(() => {
+    fetchContent('/projects', null).then((data) => {
+      if (data && data.length > 0) {
+        setProjectsData(mapFromBackend(data));
+      } else {
+        setProjectsData(DEFAULT_PROJECTS);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -196,10 +223,10 @@ const Projects = () => {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [projectsData]);
 
   return (
-    <section id="projects" ref={containerRef} className="bg-[#0b0b0b] min-h-[100svh] md:min-h-[170vh] relative font-sans overflow-x-clip text-white w-full flex items-center justify-center py-24 md:py-40 select-none">
+    <section id="projects" ref={containerRef} className="bg-[#0a0e1a] min-h-[100svh] md:min-h-[170vh] relative font-sans overflow-x-clip text-white w-full flex items-center justify-center py-24 md:py-40 select-none">
       
       {/* Background Netflix Cinematic Title Watermark */}
       <div className="absolute top-10 left-0 w-full flex items-start justify-center pointer-events-none z-0">
@@ -209,7 +236,7 @@ const Projects = () => {
       </div>
 
       {/* Ambient Crimson Glow behind folder */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55vw] h-[55vw] bg-red-600/15 rounded-full blur-[160px] pointer-events-none z-0" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55vw] h-[55vw] bg-blue-600/15 rounded-full blur-[160px] pointer-events-none z-0" />
 
       {/* Main Perspective Container */}
       <div className="mt-12 relative w-full max-w-7xl h-full flex items-center justify-center perspective-[2000px] z-10">
@@ -220,11 +247,11 @@ const Projects = () => {
           {/* Folder Back */}
           <div 
             ref={folderBackRef}
-            className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video bg-[#141414] rounded-[24px] border border-red-600/40 shadow-[0_20px_50px_rgba(229,9,20,0.25)] flex items-center justify-center"
+            className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video bg-[#131c31] rounded-[24px] border border-blue-600/40 shadow-[0_20px_50px_rgba(37,99,235,0.25)] flex items-center justify-center"
             style={{ zIndex: 5 }}
           >
-            <div className="absolute -top-6 left-6 w-32 h-8 bg-[#1f1f1f] rounded-t-xl border-t border-red-600/30" />
-            <div className="relative z-10 text-red-600 font-mono font-black text-2xl tracking-widest uppercase opacity-60">
+            <div className="absolute -top-6 left-6 w-32 h-8 bg-[#1f1f1f] rounded-t-xl border-t border-blue-600/30" />
+            <div className="relative z-10 text-blue-600 font-mono font-black text-2xl tracking-widest uppercase opacity-60">
               ARCHIVE_SLOTS
             </div>
           </div>
@@ -237,17 +264,13 @@ const Projects = () => {
               className="hidden md:block absolute w-[80vw] md:w-[33vw] max-w-[380px] aspect-[16/10] will-change-transform"
               style={{ zIndex: 10 + i }}
             >
-              <div className="w-full h-full rounded-[24px] overflow-hidden border border-white/15 bg-[#141414]/95 backdrop-blur-2xl shadow-[0_25px_50px_rgba(0,0,0,0.9)] transition-all duration-500 group hover:scale-[1.04] hover:border-red-600 hover:shadow-[0_35px_80px_rgba(229,9,20,0.35)] hover:-translate-y-2 cursor-pointer relative z-10 p-7 flex flex-col justify-between">
+              <div className="w-full h-full rounded-[24px] overflow-hidden border border-white/15 bg-[#131c31]/95 backdrop-blur-2xl shadow-[0_25px_50px_rgba(0,0,0,0.9)] transition-all duration-500 group hover:scale-[1.04] hover:border-blue-600 hover:shadow-[0_35px_80px_rgba(37,99,235,0.35)] hover:-translate-y-2 cursor-pointer relative z-10 p-7 flex flex-col justify-between">
                 
                 {/* Top Card Header */}
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-red-500 bg-red-600/10 px-2.5 py-1 rounded border border-red-600/20">
-                    {project.episode}
+                  <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-blue-500 bg-blue-600/10 px-2.5 py-1 rounded border border-blue-600/20">
+                    {project.index}
                   </span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-red-400 font-bold">{project.match} Match</span>
-                    <span className="text-[10px] font-mono border border-white/30 px-1 text-white/70">HD</span>
-                  </div>
                 </div>
 
                 {/* Middle Title & Description */}
@@ -255,7 +278,7 @@ const Projects = () => {
                   <div className="text-[11px] font-mono uppercase tracking-widest text-white/40">
                     {project.category}
                   </div>
-                  <h3 className="text-2xl font-black text-white tracking-tight group-hover:text-red-500 transition-colors duration-300">
+                  <h3 className="text-2xl font-black text-white tracking-tight group-hover:text-blue-500 transition-colors duration-300">
                     {project.title}
                   </h3>
                   <p className="text-xs text-white/70 font-light leading-relaxed line-clamp-2">
@@ -264,9 +287,9 @@ const Projects = () => {
                 </div>
 
                 {/* Bottom Tech Tags */}
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/10">
+                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/15">
                   {project.tags.map((tag, tIdx) => (
-                    <span key={tIdx} className="text-[10px] font-mono text-white/70 bg-white/5 px-2 py-0.5 rounded group-hover:border-red-600/30 transition-colors">
+                    <span key={tIdx} className="text-[10px] font-mono text-white/70 bg-white/10 px-2 py-0.5 rounded group-hover:border-blue-600/30 transition-colors">
                       {tag}
                     </span>
                   ))}
@@ -281,7 +304,7 @@ const Projects = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="text-[10px] font-mono uppercase tracking-widest text-red-500 hover:text-white transition-colors"
+                        className="text-[10px] font-mono uppercase tracking-widest text-blue-500 hover:text-white transition-colors"
                       >
                         Frontend Repo &rarr;
                       </a>
@@ -292,7 +315,7 @@ const Projects = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="text-[10px] font-mono uppercase tracking-widest text-red-500 hover:text-white transition-colors"
+                        className="text-[10px] font-mono uppercase tracking-widest text-blue-500 hover:text-white transition-colors"
                       >
                         Backend Repo &rarr;
                       </a>
@@ -303,7 +326,7 @@ const Projects = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="text-[10px] font-mono uppercase tracking-widest text-red-500 hover:text-white transition-colors"
+                        className="text-[10px] font-mono uppercase tracking-widest text-blue-500 hover:text-white transition-colors"
                       >
                         View Repo &rarr;
                       </a>
@@ -312,7 +335,7 @@ const Projects = () => {
                 )}
 
                 {/* Red Glowing Corner Accent */}
-                <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-red-600 group-hover:shadow-[0_0_15px_#E50914] transition-all" />
+                <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-blue-600 group-hover:shadow-[0_0_15px_#3B82F6] transition-all" />
               </div>
             </div>
           ))}
@@ -323,7 +346,7 @@ const Projects = () => {
             className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video pointer-events-none will-change-transform"
             style={{ zIndex: 60 }}
           >
-            <div className="absolute bottom-0 w-full h-[85%] bg-[#1c1c1c] rounded-b-[24px] rounded-t-md shadow-[0_-5px_20px_rgba(0,0,0,0.8)] flex flex-col justify-end p-6 border-t border-red-600/40">
+            <div className="absolute bottom-0 w-full h-[85%] bg-[#1c1c1c] rounded-b-[24px] rounded-t-md shadow-[0_-5px_20px_rgba(0,0,0,0.8)] flex flex-col justify-end p-6 border-t border-blue-600/40">
               <div className="w-20 h-1.5 bg-white/20 rounded-full mx-auto mb-2" />
             </div>
           </div>
@@ -346,20 +369,19 @@ const Projects = () => {
             ref={el => mobileCardsRef.current[i] = el}
             className="shrink-0 w-[78vw] aspect-[16/11] snap-center will-change-transform relative z-10"
           >
-            <div className="w-full h-full rounded-[24px] overflow-hidden border border-white/15 bg-[#141414] p-6 flex flex-col justify-between shadow-[0_20px_40px_rgba(0,0,0,0.9)]">
+            <div className="w-full h-full rounded-[24px] overflow-hidden border border-white/15 bg-[#131c31] p-6 flex flex-col justify-between shadow-[0_20px_40px_rgba(0,0,0,0.9)]">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-red-500 bg-red-600/10 px-2 py-0.5 rounded">
-                  {project.episode}
+                <span className="text-[10px] font-mono font-bold tracking-widest text-blue-500 bg-blue-600/10 px-2 py-0.5 rounded">
+                  {project.index}
                 </span>
-                <span className="text-xs font-mono text-red-400 font-bold">{project.match} Match</span>
               </div>
               <div className="space-y-2">
                 <h3 className="text-xl font-black text-white">{project.title}</h3>
                 <p className="text-xs text-white/70 font-light line-clamp-2">{project.description}</p>
               </div>
-              <div className="flex flex-wrap gap-1 pt-2 border-t border-white/10">
+              <div className="flex flex-wrap gap-1 pt-2 border-t border-white/15">
                 {project.tags.slice(0, 3).map((tag, tIdx) => (
-                  <span key={tIdx} className="text-[10px] font-mono text-white/60 bg-white/5 px-2 py-0.5 rounded">
+                  <span key={tIdx} className="text-[10px] font-mono text-white/60 bg-white/10 px-2 py-0.5 rounded">
                     {tag}
                   </span>
                 ))}
