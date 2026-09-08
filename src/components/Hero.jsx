@@ -147,7 +147,7 @@ const Hero = ({ onNavigate }) => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-screen bg-[#0a0e1a] overflow-hidden flex flex-col justify-between select-none cursor-none"
+      className="relative w-full h-screen bg-[#eef2f9] overflow-hidden flex flex-col justify-between select-none cursor-none"
     >
       <style>{`
         @keyframes marquee {
@@ -162,7 +162,7 @@ const Hero = ({ onNavigate }) => {
       `}</style>
 
       {/* 1. Cinematic Background Gradient & Marquee */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a] via-black/90 to-[#0a0e1a] z-0">
+      <div className="absolute inset-0 bg-gradient-to-t from-[#eef2f9] via-white to-[#eef2f9] z-0">
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden opacity-10">
           <div className="flex whitespace-nowrap animate-marquee">
             {[...developerRoles, ...developerRoles].map((role, idx) => (
@@ -188,15 +188,15 @@ const Hero = ({ onNavigate }) => {
         
         {/* Top Netflix Cinematic Badge */}
         <div className="hero-anim-item flex items-center justify-between w-full">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded bg-[#0a0e1a]/80 backdrop-blur-2xl border border-blue-600/40 text-xs font-mono uppercase tracking-widest text-white shadow-2xl">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded bg-[#eef2f9]/80 backdrop-blur-2xl border border-blue-600/40 text-xs font-mono uppercase tracking-widest text-[#16233f] shadow-2xl">
             <span className="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
             <span className="text-blue-500 font-bold tracking-wider">AVAILABLE FOR HIRE</span>
-            <span className="text-white/40">|</span>
-            <span className="text-white/80">AI ENGINEER</span>
+            <span className="text-[#16233f]/50">|</span>
+            <span className="text-[#16233f]/80">AI ENGINEER</span>
           </div>
-          <div className="hidden md:flex items-center gap-2 text-xs font-mono text-white/50 tracking-wider">
-            <span className="px-2 py-0.5 border border-white/15 rounded bg-white/10">FULL-STACK 4K</span>
-            <span className="px-2 py-0.5 border border-white/15 rounded bg-white/10">AI / ML CERTIFIED</span>
+          <div className="hidden md:flex items-center gap-2 text-xs font-mono text-[#16233f]/60 tracking-wider">
+            <span className="px-2 py-0.5 border border-slate-200 rounded bg-[#16233f]/8">FULL-STACK 4K</span>
+            <span className="px-2 py-0.5 border border-slate-200 rounded bg-[#16233f]/8">AI / ML CERTIFIED</span>
           </div>
         </div>
 
@@ -207,11 +207,11 @@ const Hero = ({ onNavigate }) => {
           <div className="lg:col-span-5 flex flex-col items-start space-y-5 text-left">
             
             <div className="hero-anim-item flex items-center gap-3">
-              <span className="px-2.5 py-0.5 bg-blue-600 text-white font-black text-xs rounded tracking-widest shadow-[0_0_20px_rgba(37,99,235,0.8)] animate-pulse">{hero.role_badge}</span>
-              <span className="text-white/80 text-xs font-mono tracking-widest uppercase">{hero.tagline}</span>
+              <span className="px-2.5 py-0.5 bg-blue-600 text-white font-black text-xs rounded tracking-widest shadow-[0_0_20px_rgba(37,99,235,0.5)] animate-pulse">{hero.role_badge}</span>
+              <span className="text-[#16233f]/80 text-xs font-mono tracking-widest uppercase">{hero.tagline}</span>
             </div>
 
-            <h1 className="hero-anim-item text-5xl md:text-7xl font-black tracking-tighter text-white leading-[0.95] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]">
+            <h1 className="hero-anim-item text-5xl md:text-7xl font-black tracking-tighter text-[#16233f] leading-[0.95] drop-shadow-[0_15px_30px_rgba(30,41,59,0.10)]">
               {hero.name} <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-sky-500 to-blue-700 drop-shadow-[0_0_35px_rgba(37,99,235,0.5)]">
                 {hero.subtitle}
@@ -220,11 +220,11 @@ const Hero = ({ onNavigate }) => {
 
             <div className="hero-anim-item flex items-center gap-3 text-xs font-mono text-blue-400 font-bold">
               <span className="px-2 py-0.5 bg-blue-500/10 border border-blue-500/30 rounded text-blue-500">{hero.role_badge}</span>
-              <span className="text-white/40">•</span>
+              <span className="text-[#16233f]/50">•</span>
               <span>{hero.tech_line}</span>
             </div>
 
-            <p className="hero-anim-item text-sm md:text-base text-white/80 font-light leading-relaxed max-w-md drop-shadow">
+            <p className="hero-anim-item text-sm md:text-base text-[#16233f]/80 font-light leading-relaxed max-w-md drop-shadow">
               {hero.description}
             </p>
 
@@ -232,7 +232,7 @@ const Hero = ({ onNavigate }) => {
             <div className="hero-anim-item flex items-center gap-4 pt-2">
               <button
                 onClick={() => onNavigate && onNavigate('projects')}
-                className="px-8 py-3.5 bg-white text-black font-bold text-xs uppercase tracking-widest rounded hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-[0_10px_35px_rgba(255,255,255,0.3)] flex items-center gap-2 hover:scale-105 active:scale-95 cursor-pointer"
+                className="px-8 py-3.5 bg-[#16233f] text-white font-bold text-xs uppercase tracking-widest rounded hover:bg-blue-600 transition-all duration-300 shadow-[0_10px_35px_rgba(22,35,63,0.25)] flex items-center gap-2 hover:scale-105 active:scale-95 cursor-pointer"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z" />
@@ -241,7 +241,7 @@ const Hero = ({ onNavigate }) => {
               </button>
               <button
                 onClick={() => onNavigate && onNavigate('contact')}
-                className="px-8 py-3.5 bg-neutral-900/80 text-white border border-white/15 font-bold text-xs uppercase tracking-widest rounded hover:bg-neutral-800 transition-all duration-300 shadow-xl backdrop-blur-md flex items-center gap-2 hover:scale-105 active:scale-95 cursor-pointer"
+                className="px-8 py-3.5 bg-white text-[#16233f] border border-slate-200 font-bold text-xs uppercase tracking-widest rounded hover:bg-slate-50 hover:border-blue-300 transition-all duration-300 shadow-md flex items-center gap-2 hover:scale-105 active:scale-95 cursor-pointer"
               >
                 <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
                   <circle cx="12" cy="12" r="10" />
@@ -263,12 +263,12 @@ const Hero = ({ onNavigate }) => {
               <div className="absolute -inset-3 bg-gradient-to-r from-blue-600/70 via-sky-500/40 to-indigo-600/20 rounded-3xl blur-3xl opacity-90 group-hover:opacity-100 animate-pulse duration-1000"></div>
               
               {/* Poster Card with Glossy Sheen */}
-              <div className="relative w-[280px] md:w-[320px] p-3.5 bg-[#131c31]/90 backdrop-blur-2xl rounded-2xl border border-blue-600/40 shadow-[0_40px_80px_rgba(0,0,0,0.95)] overflow-hidden">
+              <div className="relative w-[280px] md:w-[320px] p-3.5 bg-[#ffffff]/90 backdrop-blur-2xl rounded-2xl border border-blue-600/40 shadow-[0_40px_80px_rgba(30,41,59,0.12)] overflow-hidden">
                 
                 {/* Dynamic Specular Glare Layer */}
                 <div 
                   ref={glareRef}
-                  className="absolute inset-[-50%] w-[200%] h-[200%] bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none transform-gpu z-40"
+                  className="absolute inset-[-50%] w-[200%] h-[200%] bg-gradient-to-tr from-transparent via-blue-100/40 to-transparent pointer-events-none transform-gpu z-40"
                 ></div>
 
                 {/* Photo Tag */}
@@ -287,9 +287,9 @@ const Hero = ({ onNavigate }) => {
 
           {/* Right Side: Technical Specs & Stack */}
           <div className="hero-anim-item lg:col-span-3 flex flex-col items-start lg:items-end space-y-4 text-left lg:text-right">
-            <div className="p-5 bg-[#0a0e1a]/80 backdrop-blur-2xl border border-white/15 rounded-xl shadow-2xl max-w-xs">
+            <div className="p-5 bg-[#eef2f9]/80 backdrop-blur-2xl border border-slate-200 rounded-xl shadow-2xl max-w-xs">
               <h3 className="text-xs font-mono uppercase tracking-widest text-blue-500 font-bold mb-2">Core Stack</h3>
-              <p className="text-xs text-white/80 leading-relaxed font-light">
+              <p className="text-xs text-[#16233f]/80 leading-relaxed font-light">
                 {hero.core_stack}
               </p>
             </div>
@@ -298,7 +298,7 @@ const Hero = ({ onNavigate }) => {
         </div>
 
         {/* Bottom Cinematic Ticker */}
-        <div className="hero-anim-item flex items-center justify-between text-xs font-mono text-white/50 tracking-widest uppercase">
+        <div className="hero-anim-item flex items-center justify-between text-xs font-mono text-[#16233f]/60 tracking-widest uppercase">
           <span>ENGINEERED FOR SCALABILITY</span>
           <span>[ PORTFOLIO RELEASE v2.6 ]</span>
         </div>

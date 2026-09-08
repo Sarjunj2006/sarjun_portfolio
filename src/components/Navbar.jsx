@@ -9,16 +9,16 @@ const navItems = [
 
 const Navbar = ({ activeSection, onNavigate }) => {
   return (
-    <header className="fixed top-0 left-0 z-50 w-full bg-[#0a0e1a]/90 backdrop-blur-2xl border-b border-white/10">
+    <header className="fixed top-0 left-0 z-50 w-full bg-[#eef2f9]/90 backdrop-blur-2xl border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
         <button
           onClick={() => onNavigate('home')}
           className="text-2xl font-black text-blue-600 tracking-tighter flex items-center gap-2 drop-shadow-[0_2px_15px_rgba(37,99,235,0.9)] cursor-pointer"
         >
-          SARJUN J<span className="w-1.5 h-1.5 rounded-full bg-white inline-block"></span>
+          SARJUN J<span className="w-1.5 h-1.5 rounded-full bg-blue-600 inline-block"></span>
         </button>
 
-        <nav className="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-white/80">
+        <nav className="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-[#16233f]/80">
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -41,7 +41,7 @@ const Navbar = ({ activeSection, onNavigate }) => {
       </div>
 
       {/* Mobile nav row */}
-      <nav className="md:hidden flex items-center justify-center gap-4 pb-3 text-[10px] font-mono uppercase tracking-widest text-white/80 overflow-x-auto px-4">
+      <nav className="md:hidden flex items-center justify-center gap-4 pb-3 text-[10px] font-mono uppercase tracking-widest text-[#16233f]/80 overflow-x-auto px-4">
         {navItems.map((item) => (
           <button
             key={item.id}

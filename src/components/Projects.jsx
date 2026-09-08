@@ -16,6 +16,13 @@ const DEFAULT_PROJECTS = [
     links: {
       frontend: "https://github.com/Sarjunj2006/ai-career-mentor-frontend",
       backend: "https://github.com/Sarjunj2006/ai-career-mentor"
+    },
+    caseStudy: {
+      problem: "Job seekers get generic career advice that ignores their actual resume, so they can't tell which specific skills to close before an interview.",
+      whoBenefits: "Job seekers, career changers, and students preparing for technical interviews.",
+      timeSaved: "Cuts hours of manual resume review and interview research down to a single guided session.",
+      roi: "Faster, better-targeted prep means fewer wasted applications and quicker time-to-offer.",
+      approach: "Injects the user's resume and profile as context into an LLM prompt pipeline for tailored skill-gap analysis and interview questions."
     }
   },
   {
@@ -26,12 +33,21 @@ const DEFAULT_PROJECTS = [
     index: "02",
     links: {
       repo: "https://github.com/Sarjunj2006/repurposer_ai"
+    },
+    caseStudy: {
+      problem: "Creators and marketing teams spend hours manually rewriting one piece of content into every platform's format.",
+      whoBenefits: "Content creators, marketing teams, and agencies juggling multiple brand voices.",
+      timeSaved: "Turns a blog post or transcript into tweets, LinkedIn posts, and a newsletter in seconds instead of an afternoon.",
+      roi: "Multiplies content output from the same input effort, directly cutting content-ops cost per asset.",
+      approach: "Multi-tenant LangChain pipeline with tenant-specific tone settings, backed by FastAPI and PostgreSQL."
     }
   }
 ];
 
 // Converts the backend's shape (tags as a comma-separated string, separate
-// link fields) into the shape this component renders with.
+// link fields) into the shape this component renders with. Case-study
+// fields are optional on the backend right now - if absent, we fall back
+// to a generic prompt so the modal still has something useful to show.
 function mapFromBackend(items) {
   return items.map((item, i) => ({
     title: item.title,
@@ -44,6 +60,13 @@ function mapFromBackend(items) {
       backend: item.backend_link || undefined,
       repo: item.repo_link || undefined,
     },
+    caseStudy: {
+      problem: item.problem || "Add a 'problem' field in the admin panel to describe what this project solves.",
+      whoBenefits: item.who_benefits || "Add a 'who_benefits' field to describe the target users.",
+      timeSaved: item.time_saved || "Add a 'time_saved' field to quantify the efficiency gain.",
+      roi: item.roi || "Add an 'roi' field to describe the return on investment for users.",
+      approach: item.description,
+    },
   }));
 }
 
@@ -55,6 +78,7 @@ const Projects = () => {
   const mobileCardsRef = useRef([]);
   const mobileCarouselRef = useRef(null);
   const [projectsData, setProjectsData] = useState(DEFAULT_PROJECTS);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     fetchContent('/projects', null).then((data) => {
@@ -226,11 +250,11 @@ const Projects = () => {
   }, [projectsData]);
 
   return (
-    <section id="projects" ref={containerRef} className="bg-[#0a0e1a] min-h-[100svh] md:min-h-[170vh] relative font-sans overflow-x-clip text-white w-full flex items-center justify-center py-24 md:py-40 select-none">
+    <section id="projects" ref={containerRef} className="bg-[#eef2f9] min-h-[100svh] md:min-h-[170vh] relative font-sans overflow-x-clip text-[#16233f] w-full flex items-center justify-center py-24 md:py-40 select-none">
       
       {/* Background Netflix Cinematic Title Watermark */}
       <div className="absolute top-10 left-0 w-full flex items-start justify-center pointer-events-none z-0">
-        <h1 className="text-[14vw] sm:text-[17vw] md:text-[20vw] font-black text-white/[0.03] tracking-tighter leading-none whitespace-nowrap uppercase">
+        <h1 className="text-[14vw] sm:text-[17vw] md:text-[20vw] font-black text-[#16233f]/[0.04] tracking-tighter leading-none whitespace-nowrap uppercase">
           ORIGINALS
         </h1>
       </div>
@@ -247,10 +271,10 @@ const Projects = () => {
           {/* Folder Back */}
           <div 
             ref={folderBackRef}
-            className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video bg-[#131c31] rounded-[24px] border border-blue-600/40 shadow-[0_20px_50px_rgba(37,99,235,0.25)] flex items-center justify-center"
+            className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video bg-[#ffffff] rounded-[24px] border border-blue-600/40 shadow-[0_20px_50px_rgba(37,99,235,0.25)] flex items-center justify-center"
             style={{ zIndex: 5 }}
           >
-            <div className="absolute -top-6 left-6 w-32 h-8 bg-[#1f1f1f] rounded-t-xl border-t border-blue-600/30" />
+            <div className="absolute -top-6 left-6 w-32 h-8 bg-[#e2e8f2] rounded-t-xl border-t border-blue-600/30" />
             <div className="relative z-10 text-blue-600 font-mono font-black text-2xl tracking-widest uppercase opacity-60">
               ARCHIVE_SLOTS
             </div>
@@ -264,7 +288,9 @@ const Projects = () => {
               className="hidden md:block absolute w-[80vw] md:w-[33vw] max-w-[380px] aspect-[16/10] will-change-transform"
               style={{ zIndex: 10 + i }}
             >
-              <div className="w-full h-full rounded-[24px] overflow-hidden border border-white/15 bg-[#131c31]/95 backdrop-blur-2xl shadow-[0_25px_50px_rgba(0,0,0,0.9)] transition-all duration-500 group hover:scale-[1.04] hover:border-blue-600 hover:shadow-[0_35px_80px_rgba(37,99,235,0.35)] hover:-translate-y-2 cursor-pointer relative z-10 p-7 flex flex-col justify-between">
+              <div
+                onClick={() => setSelectedProject(project)}
+                className="w-full h-full rounded-[24px] overflow-hidden border border-slate-200 bg-[#ffffff]/95 backdrop-blur-2xl shadow-[0_25px_50px_rgba(30,41,59,0.10)] transition-all duration-500 group hover:scale-[1.04] hover:border-blue-600 hover:shadow-[0_35px_80px_rgba(37,99,235,0.35)] hover:-translate-y-2 cursor-pointer relative z-10 p-7 flex flex-col justify-between">
                 
                 {/* Top Card Header */}
                 <div className="flex items-center justify-between">
@@ -275,21 +301,21 @@ const Projects = () => {
 
                 {/* Middle Title & Description */}
                 <div className="space-y-2 my-auto">
-                  <div className="text-[11px] font-mono uppercase tracking-widest text-white/40">
+                  <div className="text-[11px] font-mono uppercase tracking-widest text-[#16233f]/50">
                     {project.category}
                   </div>
-                  <h3 className="text-2xl font-black text-white tracking-tight group-hover:text-blue-500 transition-colors duration-300">
+                  <h3 className="text-2xl font-black text-[#16233f] tracking-tight group-hover:text-blue-500 transition-colors duration-300">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-white/70 font-light leading-relaxed line-clamp-2">
+                  <p className="text-xs text-[#16233f]/70 font-light leading-relaxed line-clamp-2">
                     {project.description}
                   </p>
                 </div>
 
                 {/* Bottom Tech Tags */}
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/15">
+                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-200">
                   {project.tags.map((tag, tIdx) => (
-                    <span key={tIdx} className="text-[10px] font-mono text-white/70 bg-white/10 px-2 py-0.5 rounded group-hover:border-blue-600/30 transition-colors">
+                    <span key={tIdx} className="text-[10px] font-mono text-[#16233f]/70 bg-[#16233f]/8 px-2 py-0.5 rounded group-hover:border-blue-600/30 transition-colors">
                       {tag}
                     </span>
                   ))}
@@ -304,7 +330,7 @@ const Projects = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="text-[10px] font-mono uppercase tracking-widest text-blue-500 hover:text-white transition-colors"
+                        className="text-[10px] font-mono uppercase tracking-widest text-blue-500 hover:text-[#16233f] transition-colors"
                       >
                         Frontend Repo &rarr;
                       </a>
@@ -315,7 +341,7 @@ const Projects = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="text-[10px] font-mono uppercase tracking-widest text-blue-500 hover:text-white transition-colors"
+                        className="text-[10px] font-mono uppercase tracking-widest text-blue-500 hover:text-[#16233f] transition-colors"
                       >
                         Backend Repo &rarr;
                       </a>
@@ -326,13 +352,20 @@ const Projects = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="text-[10px] font-mono uppercase tracking-widest text-blue-500 hover:text-white transition-colors"
+                        className="text-[10px] font-mono uppercase tracking-widest text-blue-500 hover:text-[#16233f] transition-colors"
                       >
                         View Repo &rarr;
                       </a>
                     )}
                   </div>
                 )}
+
+                {/* Case Study Hint */}
+                <div className="pt-2 relative z-10">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-blue-600 font-bold group-hover:underline">
+                    View Case Study &rarr;
+                  </span>
+                </div>
 
                 {/* Red Glowing Corner Accent */}
                 <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-blue-600 group-hover:shadow-[0_0_15px_#3B82F6] transition-all" />
@@ -346,8 +379,8 @@ const Projects = () => {
             className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video pointer-events-none will-change-transform"
             style={{ zIndex: 60 }}
           >
-            <div className="absolute bottom-0 w-full h-[85%] bg-[#1c1c1c] rounded-b-[24px] rounded-t-md shadow-[0_-5px_20px_rgba(0,0,0,0.8)] flex flex-col justify-end p-6 border-t border-blue-600/40">
-              <div className="w-20 h-1.5 bg-white/20 rounded-full mx-auto mb-2" />
+            <div className="absolute bottom-0 w-full h-[85%] bg-[#e2e8f2] rounded-b-[24px] rounded-t-md shadow-[0_-5px_20px_rgba(30,41,59,0.08)] flex flex-col justify-end p-6 border-t border-blue-600/40">
+              <div className="w-20 h-1.5 bg-[#16233f]/15 rounded-full mx-auto mb-2" />
             </div>
           </div>
 
@@ -369,27 +402,126 @@ const Projects = () => {
             ref={el => mobileCardsRef.current[i] = el}
             className="shrink-0 w-[78vw] aspect-[16/11] snap-center will-change-transform relative z-10"
           >
-            <div className="w-full h-full rounded-[24px] overflow-hidden border border-white/15 bg-[#131c31] p-6 flex flex-col justify-between shadow-[0_20px_40px_rgba(0,0,0,0.9)]">
+            <div
+              onClick={() => setSelectedProject(project)}
+              className="w-full h-full rounded-[24px] overflow-hidden border border-slate-200 bg-[#ffffff] p-6 flex flex-col justify-between shadow-[0_20px_40px_rgba(30,41,59,0.10)] cursor-pointer">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-mono font-bold tracking-widest text-blue-500 bg-blue-600/10 px-2 py-0.5 rounded">
                   {project.index}
                 </span>
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-black text-white">{project.title}</h3>
-                <p className="text-xs text-white/70 font-light line-clamp-2">{project.description}</p>
+                <h3 className="text-xl font-black text-[#16233f]">{project.title}</h3>
+                <p className="text-xs text-[#16233f]/70 font-light line-clamp-2">{project.description}</p>
               </div>
-              <div className="flex flex-wrap gap-1 pt-2 border-t border-white/15">
+              <div className="flex flex-wrap gap-1 pt-2 border-t border-slate-200">
                 {project.tags.slice(0, 3).map((tag, tIdx) => (
-                  <span key={tIdx} className="text-[10px] font-mono text-white/60 bg-white/10 px-2 py-0.5 rounded">
+                  <span key={tIdx} className="text-[10px] font-mono text-[#16233f]/65 bg-[#16233f]/8 px-2 py-0.5 rounded">
                     {tag}
                   </span>
                 ))}
               </div>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-blue-600 font-bold pt-1">
+                View Case Study &rarr;
+              </span>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Project Case Study Modal */}
+      {selectedProject && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8"
+          onClick={() => setSelectedProject(null)}
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-[#16233f]/40 backdrop-blur-sm"></div>
+
+          {/* Modal Card */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative z-10 w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-white rounded-[28px] border border-slate-200 shadow-[0_40px_100px_rgba(30,41,59,0.25)] p-8 md:p-10"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedProject(null)}
+              className="absolute top-6 right-6 w-9 h-9 flex items-center justify-center rounded-full bg-[#16233f]/8 hover:bg-[#16233f]/15 text-[#16233f] transition-colors cursor-pointer"
+              aria-label="Close"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Header */}
+            <div className="mb-8 pr-12">
+              <div className="text-[11px] font-mono uppercase tracking-widest text-blue-500 font-bold mb-2">
+                {selectedProject.category}
+              </div>
+              <h3 className="text-3xl md:text-4xl font-black text-[#16233f] tracking-tight leading-tight">
+                {selectedProject.title}
+              </h3>
+              <p className="mt-3 text-sm text-[#16233f]/70 font-light leading-relaxed">
+                {selectedProject.description}
+              </p>
+            </div>
+
+            {/* Case Study Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="p-5 rounded-2xl bg-[#eef2f9] border border-slate-200">
+                <h4 className="text-[10px] font-mono uppercase tracking-widest text-blue-500 font-bold mb-2">Problem It Solves</h4>
+                <p className="text-sm text-[#16233f]/80 leading-relaxed">{selectedProject.caseStudy?.problem}</p>
+              </div>
+              <div className="p-5 rounded-2xl bg-[#eef2f9] border border-slate-200">
+                <h4 className="text-[10px] font-mono uppercase tracking-widest text-blue-500 font-bold mb-2">Who Benefits</h4>
+                <p className="text-sm text-[#16233f]/80 leading-relaxed">{selectedProject.caseStudy?.whoBenefits}</p>
+              </div>
+              <div className="p-5 rounded-2xl bg-[#eef2f9] border border-slate-200">
+                <h4 className="text-[10px] font-mono uppercase tracking-widest text-blue-500 font-bold mb-2">Time Saved</h4>
+                <p className="text-sm text-[#16233f]/80 leading-relaxed">{selectedProject.caseStudy?.timeSaved}</p>
+              </div>
+              <div className="p-5 rounded-2xl bg-[#eef2f9] border border-slate-200">
+                <h4 className="text-[10px] font-mono uppercase tracking-widest text-blue-500 font-bold mb-2">ROI</h4>
+                <p className="text-sm text-[#16233f]/80 leading-relaxed">{selectedProject.caseStudy?.roi}</p>
+              </div>
+            </div>
+
+            {/* Tags */}
+            <div className="flex flex-wrap gap-1.5 mt-6 pt-6 border-t border-slate-200">
+              {selectedProject.tags.map((tag, tIdx) => (
+                <span key={tIdx} className="text-[10px] font-mono text-[#16233f]/70 bg-[#16233f]/8 px-2.5 py-1 rounded">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* Links */}
+            {selectedProject.links && (
+              <div className="flex flex-wrap gap-5 mt-5">
+                {selectedProject.links.frontend && (
+                  <a href={selectedProject.links.frontend} target="_blank" rel="noopener noreferrer"
+                    className="text-xs font-mono uppercase tracking-widest text-blue-500 hover:text-[#16233f] transition-colors">
+                    Frontend Repo &rarr;
+                  </a>
+                )}
+                {selectedProject.links.backend && (
+                  <a href={selectedProject.links.backend} target="_blank" rel="noopener noreferrer"
+                    className="text-xs font-mono uppercase tracking-widest text-blue-500 hover:text-[#16233f] transition-colors">
+                    Backend Repo &rarr;
+                  </a>
+                )}
+                {selectedProject.links.repo && (
+                  <a href={selectedProject.links.repo} target="_blank" rel="noopener noreferrer"
+                    className="text-xs font-mono uppercase tracking-widest text-blue-500 hover:text-[#16233f] transition-colors">
+                    View Repo &rarr;
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
     </section>
   );

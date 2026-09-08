@@ -17,22 +17,22 @@ const Footer = ({ onNavigate }) => {
   }, []);
 
   return (
-    <footer className="bg-[#0a0e1a] text-white py-16 px-6 md:px-12 border-t border-white/15 select-none relative z-10">
+    <footer className="bg-[#eef2f9] text-[#16233f] py-16 px-6 md:px-12 border-t border-slate-200 select-none relative z-10">
       <div className="max-w-7xl mx-auto flex flex-col space-y-12">
         
         {/* Top Section: Brand & Quick Links */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pb-12 border-b border-white/15">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pb-12 border-b border-slate-200">
           <div className="space-y-2">
             <div className="text-2xl font-black text-blue-600 tracking-tighter flex items-center gap-2 drop-shadow-[0_2px_15px_rgba(37,99,235,0.9)]">
-              SARJUN J<span className="w-1.5 h-1.5 rounded-full bg-white inline-block"></span>
+              SARJUN J<span className="w-1.5 h-1.5 rounded-full bg-blue-600 inline-block"></span>
             </div>
-            <p className="text-xs font-mono text-white/50 tracking-widest uppercase">
+            <p className="text-xs font-mono text-[#16233f]/60 tracking-widest uppercase">
               // AI ENGINEER PORTFOLIO &bull; 2026
             </p>
           </div>
 
           {/* Quick Navigation Links */}
-          <nav className="flex flex-wrap gap-6 md:gap-8 text-xs font-mono uppercase tracking-widest text-white/70">
+          <nav className="flex flex-wrap gap-6 md:gap-8 text-xs font-mono uppercase tracking-widest text-[#16233f]/70">
             <button onClick={() => onNavigate && onNavigate('home')} className="hover:text-blue-500 transition-colors cursor-pointer">Home</button>
             <button onClick={() => onNavigate && onNavigate('about')} className="hover:text-blue-500 transition-colors cursor-pointer">About</button>
             <button onClick={() => onNavigate && onNavigate('expertise')} className="hover:text-blue-500 transition-colors cursor-pointer">Expertise</button>
@@ -43,7 +43,7 @@ const Footer = ({ onNavigate }) => {
         </div>
 
         {/* Middle Section: Socials & External Profiles */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-xs font-mono text-white/60">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-xs font-mono text-[#16233f]/65">
           <div className="flex items-center gap-6 flex-wrap">
             {social.github_url && (
               <a 
@@ -87,7 +87,7 @@ const Footer = ({ onNavigate }) => {
         </div>
 
         {/* Bottom Copyright & Cinematic Tagline */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-6 border-t border-white/10 text-[11px] font-mono text-white/40 uppercase tracking-widest">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-6 border-t border-slate-200/80 text-[11px] font-mono text-[#16233f]/50 uppercase tracking-widest">
           <p>&copy; {new Date().getFullYear()} Sarjun J. All Rights Reserved.</p>
           <p className="text-blue-500/80">BUILT WITH REACT & GSAP</p>
         </div>

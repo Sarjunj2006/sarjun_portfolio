@@ -32,10 +32,10 @@ const DEFAULT_EXPERTISE = [
 // Cycles through a fixed set of card gradients by position, so the admin
 // panel doesn't need to deal with CSS - just title/text/tag/order.
 const GRADIENTS = [
-  "from-[#0a1a2e] via-[#121212] to-[#0a0a0a]",
-  "from-[#081a24] via-[#111111] to-[#090909]",
-  "from-[#0d1f30] via-[#131313] to-[#0a0a0a]",
-  "from-[#091822] via-[#101010] to-[#080808]",
+  "from-[#dce7fb] via-[#eef3fb] to-[#e6edf9]",
+  "from-[#dcebfa] via-[#edf2fa] to-[#e3ecf8]",
+  "from-[#dde9fb] via-[#eff3fb] to-[#e6edf9]",
+  "from-[#dbe8fa] via-[#e7edf9] to-[#e0e9f7]",
 ];
 
 function mapFromBackend(items) {
@@ -122,7 +122,7 @@ const Expertise = () => {
     <section
       id="expertise"
       ref={containerRef}
-      className="relative w-full bg-[#0a0e1a] text-white py-20 px-6 md:px-12 select-none overflow-hidden"
+      className="relative w-full bg-[#eef2f9] text-[#16233f] py-20 px-6 md:px-12 select-none overflow-hidden"
     >
       {/* Cinematic Red Ambient Glow */}
       <div className="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
@@ -132,20 +132,20 @@ const Expertise = () => {
         {/* Compact Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
           <div className="space-y-3 max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#0a0e1a]/80 backdrop-blur-xl border border-blue-600/40 text-[11px] font-mono uppercase tracking-widest text-white shadow-xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#eef2f9]/80 backdrop-blur-xl border border-blue-600/40 text-[11px] font-mono uppercase tracking-widest text-[#16233f] shadow-xl">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping"></span>
               <span className="text-blue-500 font-bold">EXPERTISE</span>
-              <span className="text-white/40">|</span>
+              <span className="text-[#16233f]/50">|</span>
               <span>CORE COMPETENCIES</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
+            <h2 className="text-3xl md:text-5xl font-black text-[#16233f] tracking-tight leading-tight">
               DIRECTOR'S CUT <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-sky-500 to-blue-700 drop-shadow-[0_0_25px_rgba(37,99,235,0.35)]">
                 TECHNICAL CAPABILITIES.
               </span>
             </h2>
           </div>
-          <p className="text-white/60 text-xs md:text-sm font-light leading-relaxed max-w-xs">
+          <p className="text-[#16233f]/65 text-xs md:text-sm font-light leading-relaxed max-w-xs">
             Merging full-stack engineering, scalable microservices, and AI integrations into production-ready platforms.
           </p>
         </div>
@@ -156,7 +156,7 @@ const Expertise = () => {
             <div
               key={index}
               ref={addToRefs}
-              className={`sticky w-full p-6 md:p-8 rounded-2xl bg-gradient-to-br ${item.gradient} backdrop-blur-2xl border border-white/15 shadow-[0_20px_45px_rgba(0,0,0,0.85)] flex flex-col justify-between min-h-[230px] md:min-h-[250px] transform-gpu transition-all overflow-hidden group hover:border-blue-600/50`}
+              className={`sticky w-full p-6 md:p-8 rounded-2xl bg-gradient-to-br ${item.gradient} backdrop-blur-2xl border border-slate-200 shadow-[0_20px_45px_rgba(30,41,59,0.09)] flex flex-col justify-between min-h-[230px] md:min-h-[250px] transform-gpu transition-all overflow-hidden group hover:border-blue-600/50`}
               style={{
                 zIndex: index + 1,
                 top: `${95 + index * 16}px`
@@ -178,7 +178,7 @@ const Expertise = () => {
                 <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-blue-500 px-2.5 py-0.5 rounded bg-blue-600/10 border border-blue-600/25">
                   {item.tag}
                 </span>
-                <span className="text-2xl md:text-3xl font-mono font-black text-white/20">
+                <span className="text-2xl md:text-3xl font-mono font-black text-[#16233f]/30">
                   {item.number}
                 </span>
               </div>
@@ -186,12 +186,12 @@ const Expertise = () => {
               {/* Card Body */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center my-auto relative z-10">
                 <div className="lg:col-span-5">
-                  <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-snug group-hover:text-blue-500 transition-colors duration-300">
+                  <h3 className="text-2xl md:text-3xl font-black text-[#16233f] tracking-tight leading-snug group-hover:text-blue-500 transition-colors duration-300">
                     {item.title}
                   </h3>
                 </div>
                 <div className="lg:col-span-7">
-                  <p className="text-xs md:text-sm text-white/70 font-light leading-relaxed">
+                  <p className="text-xs md:text-sm text-[#16233f]/70 font-light leading-relaxed">
                     {item.text}
                   </p>
                 </div>
