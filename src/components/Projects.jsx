@@ -90,6 +90,15 @@ const Projects = () => {
     });
   }, []);
 
+  // Wraps cards into rows of at most 3 so adding more projects never pushes
+  // cards off-screen - row/col are offsets from center, not raw grid indices.
+  const maxCols = Math.min(projectsData.length, 3) || 1;
+  const totalRows = Math.ceil(projectsData.length / maxCols);
+  // Shrink card width once a row holds 3 cards so three of them plus gaps
+  // still fit inside the viewport.
+  const cardVw = maxCols >= 3 ? 25 : 33;
+  const cardGap = maxCols >= 3 ? 28 : 40;
+
   useEffect(() => {
     let ctx = gsap.context(() => {
       // Set initial origins (Centered in viewport)
@@ -100,9 +109,16 @@ const Projects = () => {
       gsap.set(folderFrontRef.current, { transformOrigin: "bottom center" });
 
       const getGridPos = (index) => {
-        // Centers cards side-by-side in a single row, works for any small count
-        const count = projectsData.length;
-        return { row: 0, col: index - (count - 1) / 2 };
+        // Wraps into rows of at most `maxCols` cards, centering each row and
+        // centering the whole stack of rows vertically.
+        const row = Math.floor(index / maxCols);
+        const isLastRow = row === totalRows - 1;
+        const itemsInRow = isLastRow
+          ? projectsData.length - row * maxCols
+          : maxCols;
+        const col = (index % maxCols) - (itemsInRow - 1) / 2;
+        const rowOffset = row - (totalRows - 1) / 2;
+        return { row: rowOffset, col };
       };
 
       cardsRef.current.forEach((card) => {
@@ -126,6 +142,13 @@ const Projects = () => {
 
         if (isDesktop) {
           let floatTween;
+
+          // Give the section enough room for however many rows of cards
+          // there are, instead of a fixed height sized for just 2 cards.
+          if (containerRef.current) {
+            const extraVh = (totalRows - 1) * 65;
+            containerRef.current.style.minHeight = `${170 + extraVh}vh`;
+          }
 
           const tl = gsap.timeline({
             scrollTrigger: {
@@ -172,15 +195,13 @@ const Projects = () => {
           tl.to(cardsRef.current, {
             x: (i) => {
               const w = Math.max(...cardsRef.current.map(c => c?.offsetWidth || 0)) || 360;
-              const gap = 40;
               const { col } = getGridPos(i);
-              return col * (w + gap);
+              return col * (w + cardGap);
             },
             y: (i) => {
               const h = Math.max(...cardsRef.current.map(c => c?.offsetHeight || 0)) || 240;
-              const gap = 40;
               const { row } = getGridPos(i);
-              return row * (h + gap);
+              return row * (h + cardGap);
             },
             rotation: () => gsap.utils.random(-3, 3),
             scale: 1,
@@ -191,6 +212,12 @@ const Projects = () => {
         }
 
         if (isMobile) {
+          // Reset the desktop-only min-height override so the section goes
+          // back to the mobile min-height set by the Tailwind class.
+          if (containerRef.current) {
+            containerRef.current.style.minHeight = '';
+          }
+
           const cardW = window.innerWidth * 0.8;
           const gap = 20;
 
@@ -285,8 +312,8 @@ const Projects = () => {
             <div
               key={i}
               ref={el => cardsRef.current[i] = el}
-              className="hidden md:block absolute w-[80vw] md:w-[33vw] max-w-[380px] aspect-[16/10] will-change-transform"
-              style={{ zIndex: 10 + i }}
+              className="hidden md:block absolute aspect-[16/10] will-change-transform"
+              style={{ zIndex: 10 + i, width: `${cardVw}vw`, maxWidth: '380px' }}
             >
               <div
                 onClick={() => setSelectedProject(project)}
