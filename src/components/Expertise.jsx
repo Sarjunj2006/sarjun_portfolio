@@ -124,11 +124,11 @@ const Expertise = () => {
       ref={containerRef}
       className="relative w-full bg-[#eef2f9] text-[#16233f] py-20 px-6 md:px-12 select-none overflow-hidden"
     >
-      {/* Cinematic Red Ambient Glow */}
+      {/* Ambient Glow */}
       <div className="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
 
       <div className="relative z-10 max-w-6xl mx-auto w-full space-y-12">
-        
+
         {/* Compact Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
           <div className="space-y-3 max-w-xl">
@@ -139,7 +139,7 @@ const Expertise = () => {
               <span>CORE COMPETENCIES</span>
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-[#16233f] tracking-tight leading-tight">
-              DIRECTOR'S CUT <br />
+              WHAT I BRING <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-sky-500 to-blue-700 drop-shadow-[0_0_25px_rgba(37,99,235,0.35)]">
                 TECHNICAL CAPABILITIES.
               </span>
@@ -163,14 +163,14 @@ const Expertise = () => {
               }}
             >
               {/* Dynamic Mouse Spotlight Highlight */}
-              <div 
+              <div
                 className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
                 style={{
                   background: 'radial-gradient(350px circle at var(--mouse-x) var(--mouse-y), rgba(37,99,235,0.18), transparent 70%)'
                 }}
               ></div>
 
-              {/* Crimson Accent Stripe */}
+              {/* Accent Stripe */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-[2px] bg-gradient-to-r from-transparent via-blue-600 to-transparent z-10"></div>
 
               {/* Card Header Top */}
@@ -197,7 +197,7 @@ const Expertise = () => {
                 </div>
               </div>
 
-              {/* Subtle Red Corner Dot */}
+              {/* Subtle Corner Dot */}
               <div className="absolute bottom-4 right-4 w-1.5 h-1.5 rounded-full bg-blue-600 group-hover:shadow-[0_0_10px_#3B82F6] z-10 transition-all"></div>
             </div>
           ))}

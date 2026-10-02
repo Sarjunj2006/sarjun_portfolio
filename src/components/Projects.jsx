@@ -93,12 +93,12 @@ const Projects = () => {
   useEffect(() => {
     let ctx = gsap.context(() => {
       // Set initial origins (Centered in viewport)
-      gsap.set([folderBackRef.current, folderFrontRef.current], { 
-        xPercent: -50, 
-        yPercent: -50 
+      gsap.set([folderBackRef.current, folderFrontRef.current], {
+        xPercent: -50,
+        yPercent: -50
       });
       gsap.set(folderFrontRef.current, { transformOrigin: "bottom center" });
-      
+
       const getGridPos = (index) => {
         // Centers cards side-by-side in a single row, works for any small count
         const count = projectsData.length;
@@ -130,7 +130,7 @@ const Projects = () => {
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: containerRef.current,
-              start: "top 50%", 
+              start: "top 50%",
               end: "bottom 50%",
               toggleActions: "play reverse play reverse",
               onEnter: () => { if (floatTween) floatTween.kill(); },
@@ -168,7 +168,7 @@ const Projects = () => {
             ease: "back.out(1.2)"
           }, "-=0.6");
 
-          // 3. Cards magically spread out into an ultra-clean blockbuster grid layout
+          // 3. Cards spread out into a clean grid layout
           tl.to(cardsRef.current, {
             x: (i) => {
               const w = Math.max(...cardsRef.current.map(c => c?.offsetWidth || 0)) || 360;
@@ -193,10 +193,10 @@ const Projects = () => {
         if (isMobile) {
           const cardW = window.innerWidth * 0.8;
           const gap = 20;
-          
+
           mobileCardsRef.current.forEach((card, i) => {
             gsap.set(card, {
-              x: -(i * (cardW + gap)), 
+              x: -(i * (cardW + gap)),
               y: 0,
               scale: 0.4,
               opacity: 0,
@@ -251,38 +251,38 @@ const Projects = () => {
 
   return (
     <section id="projects" ref={containerRef} className="bg-[#eef2f9] min-h-[100svh] md:min-h-[170vh] relative font-sans overflow-x-clip text-[#16233f] w-full flex items-center justify-center py-24 md:py-40 select-none">
-      
-      {/* Background Netflix Cinematic Title Watermark */}
+
+      {/* Background Title Watermark */}
       <div className="absolute top-10 left-0 w-full flex items-start justify-center pointer-events-none z-0">
         <h1 className="text-[14vw] sm:text-[17vw] md:text-[20vw] font-black text-[#16233f]/[0.04] tracking-tighter leading-none whitespace-nowrap uppercase">
-          ORIGINALS
+          PROJECTS
         </h1>
       </div>
 
-      {/* Ambient Crimson Glow behind folder */}
+      {/* Ambient Glow behind folder */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55vw] h-[55vw] bg-blue-600/15 rounded-full blur-[160px] pointer-events-none z-0" />
 
       {/* Main Perspective Container */}
       <div className="mt-12 relative w-full max-w-7xl h-full flex items-center justify-center perspective-[2000px] z-10">
-        
+
         {/* Origin Container */}
         <div className="relative w-0 h-0 transform-style-3d">
-          
+
           {/* Folder Back */}
-          <div 
+          <div
             ref={folderBackRef}
             className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video bg-[#ffffff] rounded-[24px] border border-blue-600/40 shadow-[0_20px_50px_rgba(37,99,235,0.25)] flex items-center justify-center"
             style={{ zIndex: 5 }}
           >
             <div className="absolute -top-6 left-6 w-32 h-8 bg-[#e2e8f2] rounded-t-xl border-t border-blue-600/30" />
             <div className="relative z-10 text-blue-600 font-mono font-black text-2xl tracking-widest uppercase opacity-60">
-              ARCHIVE_SLOTS
+              PROJECT_FILES
             </div>
           </div>
 
           {/* Desktop Project Cards */}
           {projectsData.map((project, i) => (
-            <div 
+            <div
               key={i}
               ref={el => cardsRef.current[i] = el}
               className="hidden md:block absolute w-[80vw] md:w-[33vw] max-w-[380px] aspect-[16/10] will-change-transform"
@@ -291,7 +291,7 @@ const Projects = () => {
               <div
                 onClick={() => setSelectedProject(project)}
                 className="w-full h-full rounded-[24px] overflow-hidden border border-slate-200 bg-[#ffffff]/95 backdrop-blur-2xl shadow-[0_25px_50px_rgba(30,41,59,0.10)] transition-all duration-500 group hover:scale-[1.04] hover:border-blue-600 hover:shadow-[0_35px_80px_rgba(37,99,235,0.35)] hover:-translate-y-2 cursor-pointer relative z-10 p-7 flex flex-col justify-between">
-                
+
                 {/* Top Card Header */}
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-blue-500 bg-blue-600/10 px-2.5 py-1 rounded border border-blue-600/20">
@@ -367,14 +367,14 @@ const Projects = () => {
                   </span>
                 </div>
 
-                {/* Red Glowing Corner Accent */}
+                {/* Glowing Corner Accent */}
                 <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-blue-600 group-hover:shadow-[0_0_15px_#3B82F6] transition-all" />
               </div>
             </div>
           ))}
 
           {/* Folder Front Flap */}
-          <div 
+          <div
             ref={folderFrontRef}
             className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video pointer-events-none will-change-transform"
             style={{ zIndex: 60 }}
@@ -388,7 +388,7 @@ const Projects = () => {
       </div>
 
       {/* Mobile Swipeable Carousel */}
-      <div 
+      <div
         ref={mobileCarouselRef}
         className="md:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-auto py-12 flex items-center gap-6 px-[12.5vw] pointer-events-none z-[100] snap-x snap-mandatory overflow-x-hidden hide-scrollbar"
       >
@@ -397,7 +397,7 @@ const Projects = () => {
           .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         `}</style>
         {projectsData.map((project, i) => (
-          <div 
+          <div
             key={`mob-${i}`}
             ref={el => mobileCardsRef.current[i] = el}
             className="shrink-0 w-[78vw] aspect-[16/11] snap-center will-change-transform relative z-10"

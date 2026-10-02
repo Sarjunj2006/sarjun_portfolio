@@ -43,7 +43,7 @@ const Hero = ({ onNavigate }) => {
     const content = contentRef.current;
     if (!section || !card || !content) return;
 
-    // --- GSAP CINEMATIC ENTRANCE ANIMATION ---
+    // --- ENTRANCE ANIMATION ---
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     tl.fromTo(
@@ -67,7 +67,7 @@ const Hero = ({ onNavigate }) => {
 
     const xToDot = gsap.quickTo(cursorDotRef.current, "x", { duration: 0.05, ease: "power2.out" });
     const yToDot = gsap.quickTo(cursorDotRef.current, "y", { duration: 0.05, ease: "power2.out" });
-    
+
     const xToRing = gsap.quickTo(cursorRingRef.current, "x", { duration: 0.15, ease: "power3.out" });
     const yToRing = gsap.quickTo(cursorRingRef.current, "y", { duration: 0.15, ease: "power3.out" });
 
@@ -161,7 +161,7 @@ const Hero = ({ onNavigate }) => {
         }
       `}</style>
 
-      {/* 1. Cinematic Background Gradient & Marquee */}
+      {/* 1. Background Gradient & Marquee */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#eef2f9] via-white to-[#eef2f9] z-0">
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden opacity-10">
           <div className="flex whitespace-nowrap animate-marquee">
@@ -185,8 +185,8 @@ const Hero = ({ onNavigate }) => {
 
       {/* 3. Main Content Layer */}
       <div ref={contentRef} className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 h-full flex flex-col justify-between pt-32 md:pt-24 pb-12">
-        
-        {/* Top Netflix Cinematic Badge */}
+
+        {/* Top Badge */}
         <div className="hero-anim-item flex items-center justify-between w-full">
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded bg-[#eef2f9]/80 backdrop-blur-2xl border border-blue-600/40 text-xs font-mono uppercase tracking-widest text-[#16233f] shadow-2xl">
             <span className="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
@@ -195,17 +195,17 @@ const Hero = ({ onNavigate }) => {
             <span className="text-[#16233f]/80">AI ENGINEER</span>
           </div>
           <div className="hidden md:flex items-center gap-2 text-xs font-mono text-[#16233f]/60 tracking-wider">
-            <span className="px-2 py-0.5 border border-slate-200 rounded bg-[#16233f]/8">FULL-STACK 4K</span>
+            <span className="px-2 py-0.5 border border-slate-200 rounded bg-[#16233f]/8">FULL-STACK</span>
             <span className="px-2 py-0.5 border border-slate-200 rounded bg-[#16233f]/8">AI / ML CERTIFIED</span>
           </div>
         </div>
 
-        {/* Main Center Cinematic Stage Layout */}
+        {/* Main Center Stage Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-8 my-auto">
-          
+
           {/* Left Side: Developer Story & Description */}
           <div className="lg:col-span-5 flex flex-col items-start space-y-5 text-left">
-            
+
             <div className="hero-anim-item flex items-center gap-3">
               <span className="px-2.5 py-0.5 bg-blue-600 text-white font-black text-xs rounded tracking-widest shadow-[0_0_20px_rgba(37,99,235,0.5)] animate-pulse">{hero.role_badge}</span>
               <span className="text-[#16233f]/80 text-xs font-mono tracking-widest uppercase">{hero.tagline}</span>
@@ -253,20 +253,20 @@ const Hero = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Center: Interactive 3D Holographic Tilt Developer Poster Frame */}
+          {/* Center: Interactive 3D Tilt Developer Poster Frame */}
           <div className="lg:col-span-4 flex justify-center perspective-[1200px]">
-            <div 
+            <div
               ref={cardRef}
               className="relative group transform-gpu transition-transform duration-100 ease-out will-change-transform"
             >
-              {/* Cinematic Red Neon Back Glow */}
+              {/* Back Glow */}
               <div className="absolute -inset-3 bg-gradient-to-r from-blue-600/70 via-sky-500/40 to-indigo-600/20 rounded-3xl blur-3xl opacity-90 group-hover:opacity-100 animate-pulse duration-1000"></div>
-              
+
               {/* Poster Card with Glossy Sheen */}
               <div className="relative w-[280px] md:w-[320px] p-3.5 bg-[#ffffff]/90 backdrop-blur-2xl rounded-2xl border border-blue-600/40 shadow-[0_40px_80px_rgba(30,41,59,0.12)] overflow-hidden">
-                
+
                 {/* Dynamic Specular Glare Layer */}
-                <div 
+                <div
                   ref={glareRef}
                   className="absolute inset-[-50%] w-[200%] h-[200%] bg-gradient-to-tr from-transparent via-blue-100/40 to-transparent pointer-events-none transform-gpu z-40"
                 ></div>
@@ -297,14 +297,14 @@ const Hero = ({ onNavigate }) => {
 
         </div>
 
-        {/* Bottom Cinematic Ticker */}
+        {/* Bottom Ticker */}
         <div className="hero-anim-item flex items-center justify-between text-xs font-mono text-[#16233f]/60 tracking-widest uppercase">
           <span>ENGINEERED FOR SCALABILITY</span>
-          <span>[ PORTFOLIO RELEASE v2.6 ]</span>
+          <span>BUILT WITH REACT & GSAP</span>
         </div>
       </div>
 
-      {/* 4. Ultra Pro Max Custom Precision Cursor Suite */}
+      {/* 4. Custom Precision Cursor */}
       <div
         ref={cursorDotRef}
         className="absolute top-0 left-0 z-50 pointer-events-none w-3 h-3 bg-blue-600 rounded-full shadow-[0_0_15px_#3B82F6]"
