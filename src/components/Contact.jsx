@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 const Contact = () => {
   const ref = useRef(null);
-  
+
   // React Form State tracking
   const [formData, setFormData] = useState({
     firstName: '',
@@ -20,7 +20,7 @@ const Contact = () => {
     target: ref,
     offset: ["start end", "end start"]
   });
-  
+
   // Parallax translation for the big background text
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "20%"]);
 
@@ -71,17 +71,17 @@ const Contact = () => {
   };
 
   return (
-    <section ref={ref} id="contact" className="bg-[#eef2f9] w-full min-h-screen relative overflow-hidden flex items-end pt-32 pb-0 border-t border-slate-200 select-none">
-      
-      {/* Background Cinematic Red Ambient Glow */}
+    <section ref={ref} id="contact" className="bg-[var(--bg-page)] w-full min-h-screen relative overflow-hidden flex items-end pt-32 pb-0 border-t border-[var(--border-color)] select-none">
+
+      {/* Background Ambient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
 
-      {/* Huge Background Parallax Netflix Watermark Text */}
-      <motion.div 
+      {/* Huge Background Parallax Watermark Text */}
+      <motion.div
         style={{ y }}
         className="absolute top-0 left-0 w-full h-full flex flex-col justify-start items-center overflow-hidden pointer-events-none z-0 pt-16 md:pt-12 opacity-10"
       >
-        <h1 
+        <h1
           className="text-[25vw] leading-[0.75] font-black text-blue-600 uppercase tracking-tighter select-none scale-y-[1.6] origin-top"
           style={{ fontFamily: "'Bebas Neue', 'Impact', sans-serif" }}
         >
@@ -91,14 +91,14 @@ const Contact = () => {
 
       {/* Form Card Overlay */}
       <div className="relative z-10 w-full flex justify-end items-end">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="bg-[#ffffff]/95 backdrop-blur-2xl border-t border-l border-slate-200 w-full md:w-[90%] lg:w-[82%] p-8 md:p-16 text-[#16233f] flex flex-col justify-between rounded-tl-[3rem] shadow-[0_-25px_60px_rgba(30,41,59,0.10)] relative overflow-hidden"
+          className="bg-[var(--bg-card)]/95 backdrop-blur-2xl border-t border-l border-[var(--border-color)] w-full md:w-[90%] lg:w-[82%] p-8 md:p-16 text-[var(--text-primary)] flex flex-col justify-between rounded-tl-[3rem] shadow-[0_-25px_60px_rgba(30,41,59,0.10)] relative overflow-hidden"
         >
-          {/* Subtle internal top crimson highlight glow */}
+          {/* Subtle internal top highlight glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-blue-600 to-transparent opacity-90"></div>
 
           <div className="flex items-center justify-between mb-12 md:mb-16">
@@ -106,47 +106,47 @@ const Contact = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping"></span>
               <span>GET IN TOUCH</span>
             </div>
-            <span className="text-xs font-mono text-[#16233f]/50 tracking-wider hidden md:block">
-              // LET'S BUILD SOMETHING CINEMATIC
+            <span className="text-xs font-mono text-[var(--text-primary)]/50 tracking-wider hidden md:block">
+              // LET'S BUILD SOMETHING GREAT
             </span>
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-12 md:gap-16 w-full">
             <div className="flex flex-col md:flex-row gap-12 md:gap-20 w-full">
-              
+
               {/* Left Column */}
               <div className="flex-1 flex flex-col gap-10">
                 <div className="relative">
-                  <input 
-                    type="text" 
-                    id="firstName" 
+                  <input
+                    type="text"
+                    id="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
-                    placeholder="First Name" 
+                    placeholder="First Name"
                     required
-                    className="w-full bg-transparent border-b border-slate-200 pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-[#16233f]/40 font-medium rounded-none text-[#16233f]"
+                    className="w-full bg-transparent border-b border-[var(--border-color)] pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-[var(--text-primary)]/40 font-medium rounded-none text-[var(--text-primary)]"
                   />
                 </div>
                 <div className="relative">
-                  <input 
-                    type="text" 
-                    id="lastName" 
+                  <input
+                    type="text"
+                    id="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    placeholder="Last Name" 
+                    placeholder="Last Name"
                     required
-                    className="w-full bg-transparent border-b border-slate-200 pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-[#16233f]/40 font-medium rounded-none text-[#16233f]"
+                    className="w-full bg-transparent border-b border-[var(--border-color)] pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-[var(--text-primary)]/40 font-medium rounded-none text-[var(--text-primary)]"
                   />
                 </div>
                 <div className="relative">
-                  <input 
-                    type="email" 
-                    id="email" 
+                  <input
+                    type="email"
+                    id="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Email Address" 
+                    placeholder="Email Address"
                     required
-                    className="w-full bg-transparent border-b border-slate-200 pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-[#16233f]/40 font-medium rounded-none text-[#16233f]"
+                    className="w-full bg-transparent border-b border-[var(--border-color)] pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-[var(--text-primary)]/40 font-medium rounded-none text-[var(--text-primary)]"
                   />
                 </div>
               </div>
@@ -154,28 +154,28 @@ const Contact = () => {
               {/* Right Column */}
               <div className="flex-1 flex flex-col">
                 <div className="relative h-full flex flex-col">
-                  <textarea 
-                    id="message" 
+                  <textarea
+                    id="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Type your message here..." 
+                    placeholder="Type your message here..."
                     required
-                    className="w-full h-full min-h-[140px] bg-transparent border-b border-slate-200 pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-[#16233f]/40 font-medium resize-none rounded-none text-[#16233f]"
+                    className="w-full h-full min-h-[140px] bg-transparent border-b border-[var(--border-color)] pb-3 text-lg focus:outline-none focus:border-blue-600 transition-colors placeholder-[var(--text-primary)]/40 font-medium resize-none rounded-none text-[var(--text-primary)]"
                   ></textarea>
                 </div>
               </div>
             </div>
 
             {/* Bottom Section */}
-            <div className="flex flex-col md:flex-row gap-12 mt-4 pt-6 border-t border-slate-200">
+            <div className="flex flex-col md:flex-row gap-12 mt-4 pt-6 border-t border-[var(--border-color)]">
               {/* Left text */}
-              <div className="flex-1 flex items-start gap-4 text-sm font-light text-[#16233f]/70">
-                <input 
-                  type="checkbox" 
-                  id="permission" 
+              <div className="flex-1 flex items-start gap-4 text-sm font-light text-[var(--text-primary)]/70">
+                <input
+                  type="checkbox"
+                  id="permission"
                   checked={formData.permission}
                   onChange={handleChange}
-                  className="mt-1 w-4 h-4 rounded-sm border-slate-300 bg-transparent text-blue-600 focus:ring-0 focus:ring-offset-0 cursor-pointer" 
+                  className="mt-1 w-4 h-4 rounded-sm border-[var(--border-color)] bg-transparent text-blue-600 focus:ring-0 focus:ring-offset-0 cursor-pointer"
                   style={{ accentColor: "#3B82F6" }}
                 />
                 <label htmlFor="permission" className="cursor-pointer max-w-[280px] leading-snug">
@@ -184,7 +184,7 @@ const Contact = () => {
               </div>
 
               {/* Right text & button */}
-              <div className="flex-1 flex flex-col gap-8 text-xs text-[#16233f]/60 font-light">
+              <div className="flex-1 flex flex-col gap-8 text-xs text-[var(--text-primary)]/60 font-light">
                 <p className="leading-relaxed max-w-[400px]">
                   This site is protected by security protocols and industry-standard privacy guidelines.
                 </p>
@@ -192,10 +192,10 @@ const Contact = () => {
                   <p className="max-w-[250px] leading-relaxed">
                     Ready to start a project or collaboration? Send a direct signal.
                   </p>
-                  
+
                   <div className="flex flex-col items-end gap-2">
-                    <button 
-                      type="submit" 
+                    <button
+                      type="submit"
                       disabled={status === 'sending'}
                       className="px-8 py-3.5 rounded bg-blue-600 text-white font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-blue-700 transition-all duration-300 group whitespace-nowrap shadow-[0_0_20px_rgba(37,99,235,0.35)] hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >

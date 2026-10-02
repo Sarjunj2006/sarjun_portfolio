@@ -9,6 +9,25 @@
   }
 }
 
+/* ---------- Theme variables ---------- */
+:root {
+  --bg-page: #dde4ee;
+  --bg-page-alt: #eef3fa;
+  --bg-card: #ffffff;
+  --bg-muted: #e2e8f2;
+  --text-primary: #16233f;
+  --border-color: #cbd5e1;
+}
+
+:root.dark {
+  --bg-page: #0a0e1a;
+  --bg-page-alt: #0f1626;
+  --bg-card: #131c31;
+  --bg-muted: #1c2538;
+  --text-primary: #f1f5f9;
+  --border-color: #2a3650;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -16,8 +35,9 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: #eef2f9;
-  color: #16233f;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 [data-aos="drop-bounce"] {

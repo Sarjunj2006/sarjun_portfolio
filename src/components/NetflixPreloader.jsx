@@ -36,15 +36,15 @@ const MinimalPreloader = ({ onComplete }) => {
   return (
     <div
       ref={preloaderRef}
-      className="fixed inset-0 z-[9999] bg-[#eef2f9] flex items-center justify-center select-none overflow-hidden"
+      className="fixed inset-0 z-[9999] bg-[var(--bg-page)] flex items-center justify-center select-none overflow-hidden"
     >
       <div ref={contentRef} className="flex flex-col items-center gap-4">
-        {/* Minimal Red Indicator Dot */}
+        {/* Minimal Indicator Dot */}
         <div className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping"></div>
 
         {/* Minimal Typography */}
-        <h1 
-          className="text-2xl md:text-3xl font-black uppercase tracking-[0.3em] text-[#16233f]"
+        <h1
+          className="text-2xl md:text-3xl font-black uppercase tracking-[0.3em] text-[var(--text-primary)]"
           style={{ fontFamily: "'Bebas Neue', 'Impact', sans-serif" }}
         >
           SARJUN J
